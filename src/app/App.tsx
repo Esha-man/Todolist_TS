@@ -19,18 +19,18 @@ import { ErrorSnackBar } from "../components/ErrorSnackBar/ErrorSnackBar"
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './store';
 import { RequestStatusType } from "../app/app-reducer"
-import { Routes, Route, BrowserRouter} from "react-router-dom"
+import { Routes, Route, Navigate} from "react-router-dom"
 import { PageNotFound } from "../features/PageNotFound/PageNotFound" 
 
 
 
 function App() {
     const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-
+    // const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
     
 
     return (
-        <BrowserRouter>
+        
             <div className="App">
                 <AppBar position="static">
                     <Toolbar>
@@ -52,12 +52,13 @@ function App() {
                         <Routes>
                         <Route path={"login"} element={<Login />} />
                         <Route path={"/"} element={ <TodolistsList />} />
-                        <Route path={"*"} element={ <PageNotFound />} />
+                    <Route path={"*"} element={<PageNotFound />} />
+                    {/* { isLoggedIn && <Route path={"login"} element={<Navigate replace to={"/"} />} />} */}
                         </Routes>
                 </Container>
                 <ErrorSnackBar />
             </div>
-            </BrowserRouter>
+            
     )
 }
 

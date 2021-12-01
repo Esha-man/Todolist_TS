@@ -36,13 +36,28 @@ export const todolistsAPI = {
     }
 }
 
-
-
+// export const authAPI = {
+//     login(data: any) {
+//         return instance.post<any>("/auth/login", {email: "ddd@dd.dd", password: "kkkk"})
+//     }
+// }
 export const authAPI = {
-    login(loginModel: LoginParamsType) {
-        return instance.post<LoginParamsType, ResponseAuthAPIType<{userId: number}>>("/auth/login", loginModel)
+    login(loginParams: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>("/auth/login", loginParams)
     }
 }
+
+// export const authAPI = {
+//     login(email: string,
+//         password: string,
+//         rememberMe: boolean,
+//         captcha: boolean) {
+//         return instance.post<{email: string,
+//             password: string,
+//             rememberMe: boolean,
+//             captcha: boolean}, AxiosResponse<ResponseType<{userId: number}>>>("/auth/login", {email,password,rememberMe,captcha})
+//     }
+// }
 
 
 
@@ -54,17 +69,15 @@ export const authAPI = {
 export type LoginParamsType = {
     email: string
     password: string
-    captcha: boolean
+    rememberMe?: boolean
+    captcha?: boolean
 }
 
-export type ResponseAuthAPIType<D = {}> = {
-    resultCode: number
-    messages: string[]
-    data: D
-}
-
-
-
+// export type ResponseAuthAPIType<D = {}> = {
+//     resultCode: number
+//     messages: string[]
+//     data: D
+// }
 //
 export type TodolistType = {
     id: string
