@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux'
 import { changeAppErrorAC, changeAppStatusAC, AppActionsType } from '../../app/app-reducer'
 import { authAPI, LoginParamsType } from "../../api/todolists-api"
+import { handleServerAppError } from "../../utils/error-utils"
 
 
 const initialState = {
@@ -30,6 +31,7 @@ export const loginTC = (loginParams: LoginParamsType) => (dispatch: Dispatch<Act
                 dispatch(setIsLoggedInAC(true))
                 // dispatch(changeAppStatusAC("succeeded"))
             } else {
+                handleServerAppError(res.data, dispatch)
                 dispatch(changeAppErrorAC("Some error"))
             }
             dispatch(changeAppStatusAC('failed'))
@@ -39,53 +41,24 @@ export const loginTC = (loginParams: LoginParamsType) => (dispatch: Dispatch<Act
             dispatch(changeAppStatusAC("failed"))
         })
 }
-// export const loginTC = (LoginParams: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
-//   dispatch(changeAppStatusAC('loading'))
-//   authAPI.login(LoginParams)
-// //   authAPI.login(loginModel)
-//   .then(res => {
-//       if (res.data.resultCode === 0) {
-//           dispatch(setIsLoggedInAC(true))
-//           // dispatch(changeAppStatusAC("succeeded"))
-//       } else {
-//           let err = res.data.fieldsErrors[0]
-//         //   + " " + res.data.fieldsErrors[1]
-//         dispatch(changeAppErrorAC(""))
-//     }
-//     dispatch(changeAppStatusAC('failed'))
-//   })
-//   .catch((error) => {
-//       dispatch(changeAppErrorAC(error.message))
-//       dispatch(changeAppStatusAC("failed"))
-// })
-// }
 
-
-
-// export const loginTC = (email: string,
-//     password: string,
-//     rememberMe: boolean,
-//     captcha: boolean) => (dispatch: Dispatch<ActionsType>) => {
-//   dispatch(changeAppStatusAC('loading'))
-//   authAPI.login(email,
-//     password,
-//     rememberMe,
-//     captcha)
-// //   authAPI.login(loginModel)
-//   .then(res => {
-//       if (res.data.resultCode === 0) {
-//           dispatch(setIsLoggedInAC(true))
-//           // dispatch(changeAppStatusAC("succeeded"))
-//       } else {
-//         dispatch(changeAppErrorAC('Some error occurred'))
-//     }
-//     dispatch(changeAppStatusAC('failed'))
-//   })
-//   .catch((error) => {
-//       dispatch(changeAppErrorAC(error.message))
-//       dispatch(changeAppStatusAC("failed"))
-// })
-// }
+export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(changeAppStatusAC('loading'))
+    authAPI.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(changeAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((error) => {
+            dispatch(changeAppErrorAC(error.message))
+            dispatch(changeAppStatusAC("failed"))
+        })
+ }
+ 
 
 // types
 type ActionsType = ReturnType<typeof setIsLoggedInAC> | AppActionsType

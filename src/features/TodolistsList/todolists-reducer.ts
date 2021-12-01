@@ -47,7 +47,7 @@ export const changeTodolistEntityStatusAC = (todolistId: string, entityStatus: R
 // thunks
 export const fetchTodolistsTC = () => {
     return (dispatch: Dispatch<ActionsType | AppActionsType>) => {
-        // dispatch(changeAppStatusAC("loading"))
+        dispatch(changeAppStatusAC("loading"))
         todolistsAPI.getTodolists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))

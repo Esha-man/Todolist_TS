@@ -4,7 +4,7 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
-        'API-KEY': 'de66d353-a705-4b5f-bcd1-8006ed2d9ab2'
+        'API-KEY': 'd30e0c3d-5139-44a7-a2e6-fd3b39685f7f'
     }
 })
 
@@ -36,30 +36,18 @@ export const todolistsAPI = {
     }
 }
 
-// export const authAPI = {
-//     login(data: any) {
-//         return instance.post<any>("/auth/login", {email: "ddd@dd.dd", password: "kkkk"})
-//     }
-// }
+
 export const authAPI = {
     login(loginParams: LoginParamsType) {
-        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>("/auth/login", loginParams)
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId: number }>>>("/auth/login", loginParams)
+    },
+    me() {
+        return instance.get<MeResponseType>("/auth/me")
+    },
+    logout() {
+        return instance.delete<ResponseType>("/auth/login")
     }
 }
-
-// export const authAPI = {
-//     login(email: string,
-//         password: string,
-//         rememberMe: boolean,
-//         captcha: boolean) {
-//         return instance.post<{email: string,
-//             password: string,
-//             rememberMe: boolean,
-//             captcha: boolean}, AxiosResponse<ResponseType<{userId: number}>>>("/auth/login", {email,password,rememberMe,captcha})
-//     }
-// }
-
-
 
 
 
@@ -73,11 +61,29 @@ export type LoginParamsType = {
     captcha?: boolean
 }
 
-// export type ResponseAuthAPIType<D = {}> = {
-//     resultCode: number
-//     messages: string[]
-//     data: D
+// export type MeDataType = {
+//     data: {
+//         id: number
+//         email: string
+//         login: string
+//     }
 // }
+
+export type MeResponseType = {
+    resultCode: number
+    messages: string[]
+    fieldsErrors: string[]
+    data: {
+        id: number
+        email: string
+        login: string
+    }
+
+}
+
+// id: number, email: string, login: string
+
+
 //
 export type TodolistType = {
     id: string
