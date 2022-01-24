@@ -1,7 +1,9 @@
-import { Dispatch } from 'redux'
-import { changeAppErrorAC, changeAppStatusAC, AppActionsType } from '../../app/app-reducer'
-import { authAPI, LoginParamsType } from "../../api/todolists-api"
-import { handleServerAppError } from "../../utils/error-utils"
+import {Dispatch} from 'redux'
+import {changeAppErrorAC, changeAppStatusAC, AppActionsType} from '../../app/app-reducer'
+import {authAPI, LoginParamsType} from "../../api/todolists-api"
+import {handleServerAppError} from "../../utils/error-utils"
+import {clearTasksData, TasksActionsType} from "../TodolistsList/tasks-reducer";
+import {clearTodoListsData, TodoListsActionsType} from "../TodolistsList/todolists-reducer";
 
 
 const initialState = {
@@ -9,20 +11,20 @@ const initialState = {
 }
 type InitialStateType = typeof initialState
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
-            return { ...state, isLoggedIn: action.value }
+            return {...state, isLoggedIn: action.value}
         default:
             return state
     }
 }
 // actions
 export const setIsLoggedInAC = (value: boolean) =>
-    ({ type: 'login/SET-IS-LOGGED-IN', value } as const)
+    ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 // thunks
-export const loginTC = (loginParams: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (loginParams: LoginParamsType) => (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(changeAppStatusAC('loading'))
     authAPI.login(loginParams)
         // authAPI.login(loginModel)
@@ -42,13 +44,15 @@ export const loginTC = (loginParams: LoginParamsType) => (dispatch: Dispatch<Act
         })
 }
 
-export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+export const logoutTC = () => (dispatch: Dispatch<AuthActionsType | TodoListsActionsType | TasksActionsType>) => {
     dispatch(changeAppStatusAC('loading'))
     authAPI.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(false))
                 dispatch(changeAppStatusAC('succeeded'))
+                dispatch(clearTasksData())
+                dispatch(clearTodoListsData())
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -57,8 +61,8 @@ export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
             dispatch(changeAppErrorAC(error.message))
             dispatch(changeAppStatusAC("failed"))
         })
- }
- 
+}
+
 
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | AppActionsType
+type AuthActionsType = ReturnType<typeof setIsLoggedInAC> | AppActionsType
