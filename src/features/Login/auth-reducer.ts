@@ -65,4 +65,4 @@ export const logoutTC = () => (dispatch: Dispatch<AuthActionsType | TodoListsAct
 
 
 // types
-type AuthActionsType = ReturnType<typeof setIsLoggedInAC> | AppActionsType
+export type AuthActionsType = ReturnType<typeof setIsLoggedInAC> | AppActionsType

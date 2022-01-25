@@ -3,6 +3,8 @@ import {Dispatch} from 'redux'
 import {changeAppErrorAC, changeAppStatusAC, AppActionsType, RequestStatusType} from '../../app/app-reducer'
 import {handleServerAppError} from "../../utils/error-utils"
 import {fetchTasksTC} from "./tasks-reducer";
+import { ThunkAction } from 'redux-thunk';
+import {AllActionsType, AppRootStateType} from "../../app/store";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -51,30 +53,8 @@ export const clearTodoListsData = () => (
 
 // thunks
 
-// type FetchTodolistsThunkType = ThunkAction<void, Array<TodolistDomainType>, unknown, TodoListsActionsType>
-// export const fetchTodolistsTC = () => {
-//     return (dispatch: Dispatch<TodoListsActionsType | App>) => {
-//         dispatch(changeAppStatusAC("loading"))
-//         todolistsAPI.getTodolists()
-//             .then((res) => {
-//                 dispatch(setTodolistsAC(res.data))
-//                 dispatch(changeAppStatusAC("succeeded"))
-//                 return res.data
-//             })
-//             .then((todoLists) => {
-//                 todoLists.forEach(tl => {
-//                     //@ts-ignore
-//                     dispatch(fetchTasksTC(tl.id))
-//                 })
-//             })
-//             .catch((error) => {
-//                 dispatch(changeAppErrorAC(error.message))
-//                 dispatch(changeAppStatusAC("failed"))
-//             })
-//     }
-// }
-export const fetchTodolistsTC = () => {
-    return (dispatch: Dispatch<TodoListsActionsType | AppActionsType>) => {
+export const fetchTodolistsTC = (): ThunkAction<void, AppRootStateType, unknown, AllActionsType> => {
+    return (dispatch) => {
         dispatch(changeAppStatusAC("loading"))
         todolistsAPI.getTodolists()
             .then((res) => {
@@ -84,7 +64,6 @@ export const fetchTodolistsTC = () => {
             })
             .then((todoLists) => {
                 todoLists.forEach(tl => {
-                    //@ts-ignore
                     dispatch(fetchTasksTC(tl.id))
                 })
             })
