@@ -155,12 +155,7 @@ export type UpdateDomainTaskModelType = {
     startDate?: string
     deadline?: string
 }
-// type WithEntityTaskType = TaskType & {
-//  tasksEntityStatus: RequestStatusType
-// }
-// export type TasksStateType = {
-//     [key: string]: Array<WithEntityTaskType>
-// }
+
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }

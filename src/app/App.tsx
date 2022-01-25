@@ -3,9 +3,6 @@ import './App.css'
 import { TodolistsList } from '../features/TodolistsList/TodolistsList'
 import { Login } from "../features/Login/Login"
 
-// You can learn about the difference by reading this guide on minimizing bundle size.
-// https://mui.com/guides/minimizing-bundle-size/
-// import { AppBar, Button, Container, IconButton, Toolbar, Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -18,7 +15,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { ErrorSnackBar } from "../components/ErrorSnackBar/ErrorSnackBar"
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './store';
-import { RequestStatusType, initializeAppTC } from "../app/app-reducer"
+import { RequestStatusType, initializeAppTC } from "./app-reducer"
 import { Routes, Route } from "react-router-dom"
 import { PageNotFound } from "../features/PageNotFound/PageNotFound"
 import { CircularProgress } from '@mui/material';
@@ -72,7 +69,6 @@ function App() {
                     <Route path={"login"} element={<Login />} />
                     <Route path={"/"} element={<TodolistsList />} />
                     <Route path={"*"} element={<PageNotFound />} />
-                    {/* { isLoggedIn && <Route path={"login"} element={<Navigate replace to={"/"} />} />} */}
                 </Routes>
             </Container>
             <ErrorSnackBar />

@@ -12,28 +12,17 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux"
 import { loginTC } from "./auth-reducer"
 import { AppRootStateType } from '../../app/store';
-import { Routes, Route, useNavigate } from "react-router-dom"
-import { TodolistsList } from "../TodolistsList/TodolistsList"
+import { useNavigate } from "react-router-dom"
 
 
 
-// type FormikErrorType = {
-//     email?: string
-//     password?: string
-//     rememberMe?: boolean
-// }
+
 
 export const Login = () => {
     const dispatch = useDispatch()
 
 
-    // if (isLoggedIn) {
-    //     <Routes>
-    //         <Route path={"login"} element={<Login />} />
-    //         <Route path={"/"} element={<TodolistsList />} />
-    //         <Route path={"login"} element={<Navigate replace to={"/"} />} />
-    //     </Routes>
-    // }
+
 
     const formik = useFormik({
         initialValues: {
@@ -66,18 +55,11 @@ export const Login = () => {
                             </a>
                         </p>
                         <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
+                        <p>Email: esh8284@gmail.com</p>
+                        <p>Password: hellO28415again</p>
                     </FormLabel>
                     <FormGroup>
-                        {/* <TextField
-                            label="Email"
-                            margin="normal"
-                            name="email"
-                            onChange={formik.handleChange}
-                            value={formik.values.email}
-                            onBlur={formik.handleBlur}
-                        /> */}
+
 
                         <TextField
                             type="email"
