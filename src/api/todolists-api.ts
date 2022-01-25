@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
-const instance = axios.create({
+const instance = axios.create(
+    {
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
@@ -61,13 +62,7 @@ export type LoginParamsType = {
     captcha?: boolean
 }
 
-// export type MeDataType = {
-//     data: {
-//         id: number
-//         email: string
-//         login: string
-//     }
-// }
+
 
 export type MeResponseType = {
     resultCode: number
@@ -81,10 +76,7 @@ export type MeResponseType = {
 
 }
 
-// id: number, email: string, login: string
 
-
-//
 export type TodolistType = {
     id: string
     title: string

@@ -27,11 +27,9 @@ export const setIsLoggedInAC = (value: boolean) =>
 export const loginTC = (loginParams: LoginParamsType) => (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(changeAppStatusAC('loading'))
     authAPI.login(loginParams)
-        // authAPI.login(loginModel)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true))
-                // dispatch(changeAppStatusAC("succeeded"))
             } else {
                 handleServerAppError(res.data, dispatch)
                 dispatch(changeAppErrorAC("Some error"))

@@ -23,6 +23,7 @@ import { logoutTC } from "../features/Login/auth-reducer"
 
 
 
+
 function App() {
     const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType>(state => state.app.isInitialized)
@@ -43,6 +44,10 @@ function App() {
     const logoutFunc = () => {
         dispatch(logoutTC())
     }
+
+    const loginPath = "login" || "esha-man.github.io/Todolist_TS/login"
+    const todolistPath = "/" || "esha-man.github.io/Todolist_TS/"
+    const notFoundPath = "*"
 
     return (
 
@@ -66,9 +71,9 @@ function App() {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path={"login"} element={<Login />} />
-                    <Route path={"/"} element={<TodolistsList />} />
-                    <Route path={"*"} element={<PageNotFound />} />
+                    <Route path={loginPath} element={<Login />} />
+                    <Route path={todolistPath} element={<TodolistsList />} />
+                    <Route path={notFoundPath} element={<PageNotFound />} />
                 </Routes>
             </Container>
             <ErrorSnackBar />
